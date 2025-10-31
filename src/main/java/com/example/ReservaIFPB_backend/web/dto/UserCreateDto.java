@@ -11,4 +11,6 @@ public class UserCreateDto {
 
     private String name;
     private String registration;
+    private String email;
+    private String password;
 }
