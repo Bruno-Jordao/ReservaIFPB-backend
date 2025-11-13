@@ -10,8 +10,8 @@ import java.util.Objects;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
-@Table(name="rooms")
-public class Room {
+@Table(name="blocks")
+public class Block {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,21 +19,16 @@ public class Room {
     private Long id;
     @Column(name="name", nullable = false)
     private String name;
-    @Column(name="capacity", nullable = false)
-    private int capacity;
     @ManyToOne
-    @JoinColumn(name = "block_id", nullable = false)
-    private Block block;
-    @Column(name = "floor", nullable = false)
-    private String floor;
-
+    @JoinColumn(name = "campus_id", nullable = false)
+    private Campus campus;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Room room = (Room) o;
-        return Objects.equals(id, room.id);
+        Block block = (Block) o;
+        return Objects.equals(id, block.id);
     }
 
     @Override
@@ -43,7 +38,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
+        return "Block{" +
                 "id=" + id +
                 '}';
     }
