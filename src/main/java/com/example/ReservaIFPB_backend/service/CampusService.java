@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -16,5 +18,17 @@ public class CampusService {
     @Transactional
     public Campus saveCampus(Campus campus){
         return campusRepository.save(campus);
+    }
+
+    @Transactional(readOnly = true)
+    public Campus getCampusById(Long id){
+        return campusRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Campus not found!")
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public List<Campus> getAllCampus(){
+        return campusRepository.findAll();
     }
 }
