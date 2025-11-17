@@ -5,6 +5,9 @@ import com.example.ReservaIFPB_backend.web.dto.CampusCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.CampusResponseDto;
 import org.modelmapper.ModelMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CampusMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
@@ -15,5 +18,9 @@ public class CampusMapper {
 
     public static CampusResponseDto toDto(Campus campus){
         return modelMapper.map(campus, CampusResponseDto.class);
+    }
+
+    public static List<CampusResponseDto> toListDto(List<Campus> allCampus){
+       return allCampus.stream().map(campus -> toDto(campus)).collect(Collectors.toList());
     }
 }
