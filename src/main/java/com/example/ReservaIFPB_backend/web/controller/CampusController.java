@@ -36,4 +36,10 @@ public class CampusController {
         List<Campus> campus = campusService.getAllCampus();
         return ResponseEntity.ok(CampusMapper.toListDto(campus));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CampusResponseDto> updateCampus(@PathVariable Long id, @RequestBody Campus campus){
+        Campus campusUpdate = campusService.updateCampusById(id, campus.getName(), campus.getUf());
+        return ResponseEntity.ok(CampusMapper.toDto(campusUpdate));
+    }
 }

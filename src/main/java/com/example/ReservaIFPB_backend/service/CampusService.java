@@ -31,4 +31,12 @@ public class CampusService {
     public List<Campus> getAllCampus(){
         return campusRepository.findAll();
     }
+
+    @Transactional
+    public Campus updateCampusById(Long id, String name, String uf){
+        Campus campus = getCampusById(id);
+        campus.setName(name);
+        campus.setUf(uf);
+        return campus;
+    }
 }
