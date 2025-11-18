@@ -42,4 +42,10 @@ public class CampusController {
         Campus campusUpdate = campusService.updateCampusById(id, campus.getName(), campus.getUf());
         return ResponseEntity.ok(CampusMapper.toDto(campusUpdate));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCampus(@PathVariable Long id){
+        campusService.excludeCampus(id);
+        return ResponseEntity.noContent().build();
+    }
 }
