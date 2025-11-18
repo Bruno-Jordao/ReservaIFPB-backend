@@ -39,4 +39,10 @@ public class CampusService {
         campus.setUf(uf);
         return campus;
     }
+
+    @Transactional
+    public void excludeCampus(Long id){
+        Campus campus = getCampusById(id);
+        campusRepository.deleteById(id);
+    }
 }
