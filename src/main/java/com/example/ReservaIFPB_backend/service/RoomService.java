@@ -41,4 +41,18 @@ public class RoomService {
     public List<Room> getAllRooms(){
         return roomRepository.findAll();
     }
+
+    @Transactional
+    public Room updateRoomById(Long id, RoomCreateDto dto) {
+        Room room = getRoomById(id);
+
+        Block block = blockService.getBlockById(dto.getBlockId());
+
+        room.setName(dto.getName());
+        room.setCapacity(dto.getCapacity());
+        room.setBlock(block);
+        room.setFloor(dto.getFloor());
+
+        return room;
+    }
 }

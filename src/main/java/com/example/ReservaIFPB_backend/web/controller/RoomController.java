@@ -1,12 +1,9 @@
 package com.example.ReservaIFPB_backend.web.controller;
 
-import com.example.ReservaIFPB_backend.entity.Block;
 import com.example.ReservaIFPB_backend.entity.Room;
 import com.example.ReservaIFPB_backend.service.RoomService;
-import com.example.ReservaIFPB_backend.web.dto.BlockResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.RoomCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.RoomResponseDto;
-import com.example.ReservaIFPB_backend.web.dto.mapper.BlockMapper;
 import com.example.ReservaIFPB_backend.web.dto.mapper.RoomMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,5 +35,14 @@ public class RoomController {
     public ResponseEntity<List<RoomResponseDto>> getAll(){
         List<Room> rooms = roomService.getAllRooms();
         return ResponseEntity.ok(RoomMapper.toListDto(rooms));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RoomResponseDto> updateRoom(
+            @PathVariable Long id,
+            @RequestBody RoomCreateDto dto
+    ) {
+        Room roomUpdate = roomService.updateRoomById(id, dto);
+        return ResponseEntity.ok(RoomMapper.toDto(roomUpdate));
     }
 }
