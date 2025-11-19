@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BlockService {
@@ -24,5 +26,17 @@ public class BlockService {
         block.setCampus(campus);
 
         return blockRepository.save(block);
+    }
+
+    @Transactional(readOnly = true)
+    public Block getBlockById(Long id){
+        return blockRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Block not found!")
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public List<Block> getAllBlocks(){
+        return blockRepository.findAll();
     }
 }
