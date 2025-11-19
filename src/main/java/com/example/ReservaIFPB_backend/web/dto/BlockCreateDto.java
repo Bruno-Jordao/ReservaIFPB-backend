@@ -11,5 +11,5 @@ import lombok.*;
 public class BlockCreateDto {
 
     private String name;
-    private Campus campus;
+    private Long campusId;
 }
