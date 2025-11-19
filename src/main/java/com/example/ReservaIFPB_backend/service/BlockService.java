@@ -51,4 +51,10 @@ public class BlockService {
 
         return block;
     }
+
+    @Transactional
+    public void excludeBlock(Long id){
+        Block block = getBlockById(id);
+        blockRepository.deleteById(id);
+    }
 }

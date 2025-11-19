@@ -48,4 +48,10 @@ public class BlockController {
         Block blockUpdate = blockService.updateBlockById(id, dto);
         return ResponseEntity.ok(BlockMapper.toDto(blockUpdate));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBlock(@PathVariable Long id){
+        blockService.excludeBlock(id);
+        return ResponseEntity.noContent().build();
+    }
 }
