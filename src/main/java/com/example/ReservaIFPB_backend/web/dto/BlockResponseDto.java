@@ -12,5 +12,5 @@ public class BlockResponseDto {
 
     private Long id;
     private String name;
-    private Campus campus;
+    private Long campusId;
 }
