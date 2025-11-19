@@ -39,4 +39,13 @@ public class BlockController {
         List<Block> blocks = blockService.getAllBlocks();
         return ResponseEntity.ok(BlockMapper.toListDto(blocks));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BlockResponseDto> updateBlock(
+            @PathVariable Long id,
+            @RequestBody BlockCreateDto dto
+    ) {
+        Block blockUpdate = blockService.updateBlockById(id, dto);
+        return ResponseEntity.ok(BlockMapper.toDto(blockUpdate));
+    }
 }

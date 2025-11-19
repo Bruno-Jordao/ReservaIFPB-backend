@@ -14,13 +14,6 @@ public class BlockMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    //public static Block toBlock(BlockCreateDto createDto){
-    //    return modelMapper.map(createDto, Block.class);
-    //}
-
-    //public static BlockResponseDto toDto(Block block){
-    //    return modelMapper.map(block, BlockResponseDto.class);
-    //}
     public static Block toBlock(BlockCreateDto dto){
         Block block = new Block();
         block.setName(dto.getName());

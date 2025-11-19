@@ -39,4 +39,16 @@ public class BlockService {
     public List<Block> getAllBlocks(){
         return blockRepository.findAll();
     }
+
+    @Transactional
+    public Block updateBlockById(Long id, BlockCreateDto dto) {
+        Block block = getBlockById(id);
+
+        Campus campus = campusService.getCampusById(dto.getCampusId());
+
+        block.setName(dto.getName());
+        block.setCampus(campus);
+
+        return block;
+    }
 }
