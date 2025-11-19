@@ -6,6 +6,9 @@ import com.example.ReservaIFPB_backend.web.dto.RoomCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.RoomResponseDto;
 import org.modelmapper.ModelMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class RoomMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
@@ -26,5 +29,9 @@ public class RoomMapper {
         dto.setBlockId(room.getBlock().getId());
         dto.setFloor(room.getFloor());
         return dto;
+    }
+
+    public static List<RoomResponseDto> toListDto(List<Room> allRooms){
+        return allRooms.stream().map(room -> toDto(room)).collect(Collectors.toList());
     }
 }

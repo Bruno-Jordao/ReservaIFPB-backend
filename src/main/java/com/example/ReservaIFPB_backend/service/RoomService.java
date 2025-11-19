@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class RoomService {
@@ -26,5 +28,17 @@ public class RoomService {
         room.setFloor(dto.getFloor());
 
         return roomRepository.save(room);
+    }
+
+    @Transactional(readOnly = true)
+    public Room getRoomById(Long id){
+        return roomRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Room not found!")
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public List<Room> getAllRooms(){
+        return roomRepository.findAll();
     }
 }
