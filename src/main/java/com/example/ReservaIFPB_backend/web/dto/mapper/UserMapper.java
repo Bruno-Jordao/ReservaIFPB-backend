@@ -5,9 +5,8 @@ import com.example.ReservaIFPB_backend.web.dto.UserCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.UserResponseDto;
 import org.modelmapper.ModelMapper;
 
-import java.util.List; // Adicionado
-import java.util.stream.Collectors; // Adicionado
-
+import java.util.List;
+import java.util.stream.Collectors;
 public class UserMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
