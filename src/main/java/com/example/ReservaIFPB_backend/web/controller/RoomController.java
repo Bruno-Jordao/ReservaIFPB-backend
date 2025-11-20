@@ -5,6 +5,7 @@ import com.example.ReservaIFPB_backend.service.RoomService;
 import com.example.ReservaIFPB_backend.web.dto.RoomCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.RoomResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.RoomMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public ResponseEntity<RoomResponseDto> createRoom(@RequestBody RoomCreateDto dto){
+    public ResponseEntity<RoomResponseDto> createRoom(@Valid @RequestBody RoomCreateDto dto){
         Room newRoom = roomService.saveRoom(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(RoomMapper.toDto(newRoom));
     }
@@ -40,7 +41,7 @@ public class RoomController {
     @PutMapping("/{id}")
     public ResponseEntity<RoomResponseDto> updateRoom(
             @PathVariable Long id,
-            @RequestBody RoomCreateDto dto
+            @Valid @RequestBody RoomCreateDto dto
     ) {
         Room roomUpdate = roomService.updateRoomById(id, dto);
         return ResponseEntity.ok(RoomMapper.toDto(roomUpdate));

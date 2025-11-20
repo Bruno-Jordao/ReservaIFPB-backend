@@ -5,6 +5,7 @@ import com.example.ReservaIFPB_backend.service.CampusService;
 import com.example.ReservaIFPB_backend.web.dto.CampusCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.CampusResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.CampusMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CampusController {
     private final CampusService campusService;
 
     @PostMapping
-    public ResponseEntity<CampusResponseDto> createCampus(@RequestBody CampusCreateDto createDto){
+    public ResponseEntity<CampusResponseDto> createCampus(@Valid @RequestBody CampusCreateDto createDto){
         Campus newCampus = campusService.saveCampus(CampusMapper.toCampus(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CampusMapper.toDto(newCampus));
     }
@@ -38,7 +39,7 @@ public class CampusController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CampusResponseDto> updateCampus(@PathVariable Long id, @RequestBody Campus campus){
+    public ResponseEntity<CampusResponseDto> updateCampus(@PathVariable Long id, @Valid @RequestBody CampusCreateDto campus){
         Campus campusUpdate = campusService.updateCampusById(id, campus.getName(), campus.getUf());
         return ResponseEntity.ok(CampusMapper.toDto(campusUpdate));
     }
