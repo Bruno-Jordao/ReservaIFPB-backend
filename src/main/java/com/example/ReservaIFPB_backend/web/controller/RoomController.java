@@ -45,4 +45,10 @@ public class RoomController {
         Room roomUpdate = roomService.updateRoomById(id, dto);
         return ResponseEntity.ok(RoomMapper.toDto(roomUpdate));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long id){
+        roomService.excludeRoom(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -55,4 +55,10 @@ public class RoomService {
 
         return room;
     }
+
+    @Transactional
+    public void excludeRoom(Long id){
+        Room room = getRoomById(id);
+        roomRepository.deleteById(id);
+    }
 }
