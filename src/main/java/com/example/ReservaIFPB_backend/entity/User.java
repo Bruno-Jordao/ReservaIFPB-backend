@@ -1,6 +1,5 @@
 package com.example.ReservaIFPB_backend.entity;
 
-import com.example.ReservaIFPB_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

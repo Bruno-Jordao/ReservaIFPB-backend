@@ -1,6 +1,6 @@
 package com.example.ReservaIFPB_backend.web.dto;
 
-import com.example.ReservaIFPB_backend.enums.Role;
+import com.example.ReservaIFPB_backend.entity.Role;
 import lombok.*;
 
 @Getter
