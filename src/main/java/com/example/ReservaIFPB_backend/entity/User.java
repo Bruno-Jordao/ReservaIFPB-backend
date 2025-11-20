@@ -13,7 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User {
 
     @Id
@@ -33,7 +33,8 @@ public class User {
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="role", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="role_id", nullable = false)
     private Role role;
 
     @Override
