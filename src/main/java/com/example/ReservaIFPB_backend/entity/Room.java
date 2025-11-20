@@ -20,7 +20,7 @@ public class Room {
     @Column(name="name", nullable = false)
     private String name;
     @Column(name="capacity", nullable = false)
-    private int capacity;
+    private Integer capacity;
     @ManyToOne
     @JoinColumn(name = "block_id", nullable = false)
     private Block block;

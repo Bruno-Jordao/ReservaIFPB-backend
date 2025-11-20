@@ -12,7 +12,7 @@ public class RoomResponseDto {
 
     private Long id;
     private String name;
-    private int capacity;
+    private Integer capacity;
     private Long blockId;
     private String floor;
 }

@@ -8,6 +8,7 @@ import com.example.ReservaIFPB_backend.web.dto.BlockResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.CampusResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.BlockMapper;
 import com.example.ReservaIFPB_backend.web.dto.mapper.CampusMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class BlockController {
     private final BlockService blockService;
 
     @PostMapping
-    public ResponseEntity<BlockResponseDto> createBlock(@RequestBody BlockCreateDto dto){
+    public ResponseEntity<BlockResponseDto> createBlock(@Valid @RequestBody BlockCreateDto dto){
         Block newBlock = blockService.saveBlock(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(BlockMapper.toDto(newBlock));
     }
@@ -43,7 +44,7 @@ public class BlockController {
     @PutMapping("/{id}")
     public ResponseEntity<BlockResponseDto> updateBlock(
             @PathVariable Long id,
-            @RequestBody BlockCreateDto dto
+            @Valid @RequestBody BlockCreateDto dto
     ) {
         Block blockUpdate = blockService.updateBlockById(id, dto);
         return ResponseEntity.ok(BlockMapper.toDto(blockUpdate));

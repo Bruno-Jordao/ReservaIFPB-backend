@@ -1,6 +1,7 @@
 package com.example.ReservaIFPB_backend.web.dto;
 
-import com.example.ReservaIFPB_backend.entity.Campus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,8 @@ import lombok.*;
 @ToString
 public class BlockCreateDto {
 
+    @NotBlank
     private String name;
+    @NotNull
     private Long campusId;
 }
