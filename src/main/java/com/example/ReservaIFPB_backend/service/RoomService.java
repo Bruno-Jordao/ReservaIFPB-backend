@@ -2,6 +2,8 @@ package com.example.ReservaIFPB_backend.service;
 
 import com.example.ReservaIFPB_backend.entity.Block;
 import com.example.ReservaIFPB_backend.entity.Room;
+import com.example.ReservaIFPB_backend.exception.RoomAlreadyExistsException;
+import com.example.ReservaIFPB_backend.exception.RoomNotFoundException;
 import com.example.ReservaIFPB_backend.repository.RoomRepository;
 import com.example.ReservaIFPB_backend.web.dto.RoomCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,11 @@ public class RoomService {
     public Room saveRoom(RoomCreateDto dto){
         Block block = blockService.getBlockById(dto.getBlockId());
 
+        boolean exists = roomRepository.existsByNameIgnoreCaseAndBlockId(dto.getName(), dto.getBlockId());
+        if (exists) {
+            throw new RoomAlreadyExistsException("Room already exists in this block");
+        }
+
         Room room = new Room();
         room.setName(dto.getName());
         room.setCapacity(dto.getCapacity());
@@ -33,7 +40,7 @@ public class RoomService {
     @Transactional(readOnly = true)
     public Room getRoomById(Long id){
         return roomRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Room not found!")
+                () -> new RoomNotFoundException("Room not found with id: " + id)
         );
     }
 
