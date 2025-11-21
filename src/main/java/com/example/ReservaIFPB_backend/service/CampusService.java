@@ -1,6 +1,8 @@
 package com.example.ReservaIFPB_backend.service;
 
 import com.example.ReservaIFPB_backend.entity.Campus;
+import com.example.ReservaIFPB_backend.exception.CampusAlreadyExistsException;
+import com.example.ReservaIFPB_backend.exception.CampusNotFoundException;
 import com.example.ReservaIFPB_backend.repository.CampusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,14 +19,19 @@ public class CampusService {
 
     @Transactional
     public Campus saveCampus(Campus campus){
+        boolean exists = campusRepository.existsByNameIgnoreCase(campus.getName());
+
+        if (exists) {
+            throw new CampusAlreadyExistsException(campus.getName());
+        }
+
         return campusRepository.save(campus);
     }
 
     @Transactional(readOnly = true)
     public Campus getCampusById(Long id){
-        return campusRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Campus not found!")
-        );
+        return campusRepository.findById(id)
+                .orElseThrow(() -> new CampusNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
