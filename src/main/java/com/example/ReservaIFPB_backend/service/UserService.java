@@ -2,6 +2,7 @@ package com.example.ReservaIFPB_backend.service;
 
 import com.example.ReservaIFPB_backend.entity.Role;
 import com.example.ReservaIFPB_backend.entity.User;
+import com.example.ReservaIFPB_backend.exception.UserNotFoundException;
 import com.example.ReservaIFPB_backend.repository.UserRepository;
 import com.example.ReservaIFPB_backend.web.dto.UserCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.UserMapper;
@@ -38,7 +39,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUserById(Long id){
         return userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found!")
+                () -> new UserNotFoundException(id)
         );
     }
 
