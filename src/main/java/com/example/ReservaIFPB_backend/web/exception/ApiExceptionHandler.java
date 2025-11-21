@@ -1,5 +1,7 @@
 package com.example.ReservaIFPB_backend.web.exception;
 
+import com.example.ReservaIFPB_backend.exception.BlockAlreadyExistsException;
+import com.example.ReservaIFPB_backend.exception.BlockNotFoundException;
 import com.example.ReservaIFPB_backend.exception.CampusAlreadyExistsException;
 import com.example.ReservaIFPB_backend.exception.CampusNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +32,9 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler({
             CampusNotFoundException.class,
-            CampusAlreadyExistsException.class
+            CampusAlreadyExistsException.class,
+            BlockNotFoundException.class,
+            BlockAlreadyExistsException.class
     })
     public ResponseEntity<ErrorMessage> handleDomainExceptions(RuntimeException ex,
                                                                HttpServletRequest request) {
