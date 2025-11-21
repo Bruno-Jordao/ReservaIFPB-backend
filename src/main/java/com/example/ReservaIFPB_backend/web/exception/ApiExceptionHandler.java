@@ -1,9 +1,6 @@
 package com.example.ReservaIFPB_backend.web.exception;
 
-import com.example.ReservaIFPB_backend.exception.BlockAlreadyExistsException;
-import com.example.ReservaIFPB_backend.exception.BlockNotFoundException;
-import com.example.ReservaIFPB_backend.exception.CampusAlreadyExistsException;
-import com.example.ReservaIFPB_backend.exception.CampusNotFoundException;
+import com.example.ReservaIFPB_backend.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,7 +31,9 @@ public class ApiExceptionHandler {
             CampusNotFoundException.class,
             CampusAlreadyExistsException.class,
             BlockNotFoundException.class,
-            BlockAlreadyExistsException.class
+            BlockAlreadyExistsException.class,
+            RoomNotFoundException.class,
+            RoomAlreadyExistsException.class
     })
     public ResponseEntity<ErrorMessage> handleDomainExceptions(RuntimeException ex,
                                                                HttpServletRequest request) {
