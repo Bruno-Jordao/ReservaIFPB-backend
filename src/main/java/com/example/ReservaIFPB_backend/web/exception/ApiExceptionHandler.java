@@ -36,7 +36,8 @@ public class ApiExceptionHandler {
             RoomAlreadyExistsException.class,
             UserNotFoundException.class,
             RoleNotFoundException.class,
-            ReservationNotFoundException.class
+            ReservationNotFoundException.class,
+            UserAlreadyExistsException.class
     })
     public ResponseEntity<ErrorMessage> handleDomainExceptions(RuntimeException ex,
                                                                HttpServletRequest request) {
