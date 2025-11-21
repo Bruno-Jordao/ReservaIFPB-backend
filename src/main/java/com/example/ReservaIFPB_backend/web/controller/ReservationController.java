@@ -5,6 +5,7 @@ import com.example.ReservaIFPB_backend.service.ReservationService;
 import com.example.ReservaIFPB_backend.web.dto.ReservationCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.ReservationResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.ReservationMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationCreateDto dto){
+    public ResponseEntity<ReservationResponseDto> createReservation(@Valid @RequestBody ReservationCreateDto dto){
         Reservation newReservation = reservationService.saveReservation(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(ReservationMapper.toDto(newReservation));
     }
@@ -46,7 +47,7 @@ public class ReservationController {
     @PutMapping("/{id}")
     public ResponseEntity<ReservationResponseDto> updateReservation(
             @PathVariable Long id,
-            @RequestBody ReservationCreateDto dto
+            @Valid @RequestBody ReservationCreateDto dto
     ) {
         Reservation reservationUpdate = reservationService.updateReservationById(id, dto);
         return ResponseEntity.ok(ReservationMapper.toDto(reservationUpdate));

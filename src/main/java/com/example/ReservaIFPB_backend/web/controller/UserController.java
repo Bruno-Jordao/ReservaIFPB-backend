@@ -5,6 +5,7 @@ import com.example.ReservaIFPB_backend.service.UserService;
 import com.example.ReservaIFPB_backend.web.dto.UserCreateDto;
 import com.example.ReservaIFPB_backend.web.dto.UserResponseDto;
 import com.example.ReservaIFPB_backend.web.dto.mapper.UserMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserCreateDto dto){
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserCreateDto dto){
         User newUser = userService.saveUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(newUser));
     }
@@ -40,7 +41,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> updateUser(
             @PathVariable Long id,
-            @RequestBody UserCreateDto dto
+            @Valid @RequestBody UserCreateDto dto
     ) {
         User userUpdate = userService.updateUserById(id, dto);
         return ResponseEntity.ok(UserMapper.toDto(userUpdate));

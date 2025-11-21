@@ -3,6 +3,7 @@ package com.example.ReservaIFPB_backend.service;
 import com.example.ReservaIFPB_backend.entity.Reservation;
 import com.example.ReservaIFPB_backend.entity.Room;
 import com.example.ReservaIFPB_backend.entity.User;
+import com.example.ReservaIFPB_backend.exception.ReservationNotFoundException;
 import com.example.ReservaIFPB_backend.repository.ReservationRepository;
 import com.example.ReservaIFPB_backend.web.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public Reservation getReservationById(Long id){
         return reservationRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Reservation not found!")
+                () -> new ReservationNotFoundException("Reservation not found with id: " + id)
         );
     }
 
@@ -77,7 +78,12 @@ public class ReservationService {
 
     @Transactional
     public void excludeReservation(Long id){
-        getReservationById(id);
+        Reservation reservation = getReservationById(id);
+
+        if (reservation.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Não é possível excluir uma reserva que já começou!");
+        }
+
         reservationRepository.deleteById(id);
     }
 }
