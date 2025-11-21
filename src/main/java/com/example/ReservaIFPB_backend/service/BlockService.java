@@ -2,6 +2,8 @@ package com.example.ReservaIFPB_backend.service;
 
 import com.example.ReservaIFPB_backend.entity.Block;
 import com.example.ReservaIFPB_backend.entity.Campus;
+import com.example.ReservaIFPB_backend.exception.BlockAlreadyExistsException;
+import com.example.ReservaIFPB_backend.exception.BlockNotFoundException;
 import com.example.ReservaIFPB_backend.repository.BlockRepository;
 import com.example.ReservaIFPB_backend.web.dto.BlockCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,11 @@ public class BlockService {
     public Block saveBlock(BlockCreateDto dto){
         Campus campus = campusService.getCampusById(dto.getCampusId());
 
+        boolean exists = blockRepository.existsByNameIgnoreCaseAndCampusId(dto.getName(), dto.getCampusId());
+        if (exists) {
+            throw new BlockAlreadyExistsException("Block already exists in this campus");
+        }
+
         Block block = new Block();
         block.setName(dto.getName());
         block.setCampus(campus);
@@ -31,7 +38,7 @@ public class BlockService {
     @Transactional(readOnly = true)
     public Block getBlockById(Long id){
         return blockRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Block not found!")
+                () -> new BlockNotFoundException("Block not found with id: " + id)
         );
     }
 
