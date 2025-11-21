@@ -26,6 +26,7 @@ public class ReservationService {
         User teacher = userService.getUserById(dto.getTeacherId());
         Room room = roomService.getRoomById(dto.getRoomId());
 
+        validateNewReservation(dto);
 
         Reservation reservation = new Reservation();
         reservation.setTeacher(teacher);
@@ -36,6 +37,21 @@ public class ReservationService {
         reservation.setActivity(dto.getActivity());
 
         return reservationRepository.save(reservation);
+    }
+
+    private void validateNewReservation(ReservationCreateDto dto) {
+        if (!dto.getStartTime().isBefore(dto.getEndTime())) {
+            throw new RuntimeException("A hora de início deve ser anterior à hora de término da reserva.");
+        }
+
+        List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservations(
+                dto.getRoomId(),
+                dto.getStartTime(),
+                dto.getEndTime()
+        );
+        if (!overlappingReservations.isEmpty()) {
+            throw new RuntimeException("Já existe uma reserva para esta sala neste período.");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -63,6 +79,8 @@ public class ReservationService {
             throw new RuntimeException("Não é possível alterar uma reserva que já começou!");
         }
 
+        validateUpdateReservation(id, dto);
+
         User teacher = userService.getUserById(dto.getTeacherId());
         Room room = roomService.getRoomById(dto.getRoomId());
 
@@ -74,6 +92,22 @@ public class ReservationService {
         reservation.setActivity(dto.getActivity());
 
         return reservation;
+    }
+
+    private void validateUpdateReservation(Long reservationId, ReservationCreateDto dto) {
+        if (!dto.getStartTime().isBefore(dto.getEndTime())) {
+            throw new RuntimeException("A hora de início deve ser anterior à hora de término da reserva.");
+        }
+
+        List<Reservation> overlappingReservations = reservationRepository.findOverlappingReservationsExcludingSelf(
+                dto.getRoomId(),
+                dto.getStartTime(),
+                dto.getEndTime(),
+                reservationId
+        );
+        if (!overlappingReservations.isEmpty()) {
+            throw new RuntimeException("Já existe outra reserva para esta sala neste período.");
+        }
     }
 
     @Transactional
