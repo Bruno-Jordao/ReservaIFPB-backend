@@ -2,6 +2,7 @@ package com.example.ReservaIFPB_backend.service;
 
 import com.example.ReservaIFPB_backend.entity.Role;
 import com.example.ReservaIFPB_backend.entity.User;
+import com.example.ReservaIFPB_backend.exception.UserAlreadyExistsException;
 import com.example.ReservaIFPB_backend.exception.UserNotFoundException;
 import com.example.ReservaIFPB_backend.repository.UserRepository;
 import com.example.ReservaIFPB_backend.web.dto.UserCreateDto;
@@ -19,12 +20,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
 
+
     @Transactional
     public User saveUser(UserCreateDto dto){
         User user = UserMapper.toUser(dto);
 
+        boolean exists = userRepository.existsByEmailOrRegistrationIgnoreCase(user.getEmail(), user.getRegistration());
 
-        if (userRepository.count() == 0) {
+        if (exists) {
+            throw new UserAlreadyExistsException("User with this email or registration already exists");
+        }
+
+        if (userRepository.count() == 0)
+    {
             Role adminRole = roleService.findRoleByName("ADMIN");
             user.setRole(adminRole);
         } else {
