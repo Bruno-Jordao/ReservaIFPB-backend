@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
-@Tag(name = "Campus", description = "Endpoints para gerenciamento de Campus do IFPB")
+@Tag(name = "Campus", description = "Endpoints for managing IFPB campus")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/campus")
@@ -23,35 +23,35 @@ public class CampusController {
 
     private final CampusService campusService;
 
-    @Operation(summary = "Cria um novo campus", description = "Registra um novo campus na base de dados")
+    @Operation(summary = "Create a new campus", description = "Register a new campus in the database")
     @PostMapping
     public ResponseEntity<CampusResponseDto> createCampus(@Valid @RequestBody CampusCreateDto createDto){
         Campus newCampus = campusService.saveCampus(CampusMapper.toCampus(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CampusMapper.toDto(newCampus));
     }
 
-    @Operation(summary = "Busca campus por ID", description = "Retorna os detalhes de um campus específico")
+    @Operation(summary = "Search campus by ID", description = "Returns the details of a specific campus")
     @GetMapping("/{id}")
     public ResponseEntity<CampusResponseDto> getCampusId(@PathVariable Long id){
         Campus campus = campusService.getCampusById(id);
         return ResponseEntity.ok(CampusMapper.toDto(campus));
     }
 
-    @Operation(summary = "Lista todos os campus", description = "Retorna uma lista completa de todos os campus cadastrados")
+    @Operation(summary = "List all campus", description = "Returns a complete list of all registered campus")
     @GetMapping
     public ResponseEntity<List<CampusResponseDto>> getAll(){
         List<Campus> campus = campusService.getAllCampus();
         return ResponseEntity.ok(CampusMapper.toListDto(campus));
     }
 
-    @Operation(summary = "Atualiza um campus", description = "Altera o nome e UF de um campus existente pelo ID")
+    @Operation(summary = "Update a campus", description = "Changes the name and state of an existing campus by ID")
     @PutMapping("/{id}")
     public ResponseEntity<CampusResponseDto> updateCampus(@PathVariable Long id, @Valid @RequestBody CampusCreateDto campus){
         Campus campusUpdate = campusService.updateCampusById(id, campus.getName(), campus.getUf());
         return ResponseEntity.ok(CampusMapper.toDto(campusUpdate));
     }
 
-    @Operation(summary = "Exclui um campus", description = "Remove um campus do sistema pelo ID")
+    @Operation(summary = "Deletes a campus", description = "Remove a campus from the system by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCampus(@PathVariable Long id){
         campusService.excludeCampus(id);
