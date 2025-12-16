@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Reserva IFPB API",
-                description = "Documentação da API do sistema de reserva de espaços do IFPB.",
+                description = "Documentation for the IFPB space reservation system API",
                 version = "v1.0.0",
                 contact = @Contact(
-                        name = "Equipe ReservaIFPB",
-                        email = "contato@reservaifpb.com.br"
+                        name = "Team ReservaIFPB",
+                        email = "contact@reservaifpb.com.br"
                 )
         ),
         servers = {
-                @Server(url = "http://localhost:8080", description = "Servidor de Desenvolvimento Local")
+                @Server(url = "http://localhost:8080", description = "Local Development Server")
         }
 )
 @Configuration
